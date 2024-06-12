@@ -120,9 +120,9 @@ installDepend() {
         sudo ${PACKAGER} install -y glibc-devel.i686 libgcc.i686
     elif [[ $PACKAGER == "zypper" ]]; then
         COMPILEDEPS='patterns-devel-base-devel_basis'
-        sudo ${PACKAGER} refresh
-        sudo ${PACKAGER} install -y ${DEPENDENCIES} ${COMPILEDEPS}
-        sudo ${PACKAGER} install -y libgcc_s1-gcc7-32bit glibc-devel-32bit
+        sudo ${PACKAGER} refresh 
+        sudo ${PACKAGER} --non-interactive install  ${DEPENDENCIES} ${COMPILEDEPS}  # non-interactive is the equivalent of -y for opensuse also install could be in (for install)
+        sudo ${PACKAGER} --non-interactive install  libgcc_s1-gcc7-32bit glibc-devel-32bit # non-interactive is the equivalent of -y for opensuse
     else
         sudo ${PACKAGER} install -y ${DEPENDENCIES}
     fi
