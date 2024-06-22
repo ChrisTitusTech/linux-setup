@@ -90,7 +90,12 @@ ncurses lib32-ncurses ocl-icd lib32-ocl-icd libxslt lib32-libxslt libva lib32-li
 lib32-gtk3 gst-plugins-base-libs lib32-gst-plugins-base-libs vulkan-icd-loader lib32-vulkan-icd-loader
     elif [[ $PACKAGER == "apt-get" ]]; then
         sudo ${PACKAGER} update
-        sudo ${PACKAGER} install -y wine64 wine32 libasound2-plugins:i386 libsdl2-2.0-0:i386 libdbus-1-3:i386 libsqlite3-0:i386
+	sudo dpkg --add-architecture i386
+	sudo mkdir -pm755 /etc/apt/keyrings
+	sudo wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key
+	DEBIAN_DISTRO_NAME=$(dpkg --status tzdata|awk -F'[:-]' '$1=="Provides"{print $NF}')
+	sudo wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/debian/dists/${DEBIAN_DISTRO_NAME}/winehq-${DEBIAN_DISTRO_NAME}.sources
+	sudo ${PACKAGER} install --install-recommends winehq-stable -y
     elif [[ $PACKAGER == "dnf|zypper" ]]; then
         sudo ${PACKAGER} install -y wine
     else
