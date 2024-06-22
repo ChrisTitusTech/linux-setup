@@ -95,7 +95,7 @@ lib32-gtk3 gst-plugins-base-libs lib32-gst-plugins-base-libs vulkan-icd-loader l
 	sudo wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key
 	DEBIAN_DISTRO_NAME=$(dpkg --status tzdata|awk -F'[:-]' '$1=="Provides"{print $NF}')
 	sudo wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/debian/dists/${DEBIAN_DISTRO_NAME}/winehq-${DEBIAN_DISTRO_NAME}.sources
-	sudo ${PACKAGER} install --install-recommends winehq-stable
+	sudo ${PACKAGER} install --install-recommends winehq-stable -y
     elif [[ $PACKAGER == "dnf|zypper" ]]; then
         sudo ${PACKAGER} install -y wine
     else
